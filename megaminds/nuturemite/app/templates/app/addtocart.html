@@ -1,0 +1,487 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block main-content %}
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .my-5 {
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mb-5 {
+        margin-bottom: 5rem;
+    }
+
+    .col-sm-8, .col-sm-4 {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+    }
+
+    .cart {
+        border: 2px solid #007bff;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .cart-body {
+        padding: 0;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-sm-3, .col-sm-9 {
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: .75rem 1.25rem;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .list-group-item:first-child {
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+    }
+
+    .list-group-item:last-child {
+        margin-bottom: 0;
+        border-bottom-right-radius: .25rem;
+        border-bottom-left-radius: .25rem;
+    }
+    h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #007bff;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #007bff;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #545b62;
+            border-color: #4e555b;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .small {
+            font-size: 0.875rem;
+        }
+
+        .remove-cart {
+            text-decoration: none;
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .remove-cart:hover {
+            color: #fff;
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+        .card {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .list-group {
+            margin-bottom: 1rem;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .d-grid {
+            display: grid;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-sm-8, .col-sm-4 {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 576px) {
+            .img-fluid {
+                width: 100%;
+                height: auto;
+            }
+
+            .remove-cart {
+                display: block;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .btn-primary {
+                margin-top: 1rem;
+            }
+        }
+        .card {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .list-group {
+            margin-bottom: 1rem;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-group-item strong {
+            font-weight: bold;
+        }
+
+        .d-grid {
+            display: grid;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-sm-8,
+            .col-sm-4 {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 576px) {
+            .img-fluid {
+                width: 100%;
+                height: auto;
+            }
+
+            .remove-cart {
+                display: block;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .btn-primary {
+                margin-top: 1rem;
+            }
+        }
+        .row:not(:last-child) {
+            border-bottom: 1px solid rgba(212, 12, 12, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+         .cart-item {
+            border-bottom: 1px solid #dee2e6; /* Add a border between cart items */
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none; /* Remove border for the last cart item */
+        }
+
+        .card {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .list-group {
+            margin-bottom: 1rem;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none; /* Remove default list-group-item border */
+        }
+
+        .list-group-item strong {
+            font-weight: bold;
+        }
+
+        .d-grid {
+            display: grid;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-sm-8,
+            .col-sm-4 {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 576px) {
+            .img-fluid {
+                width: 100%;
+                height: auto;
+            }
+
+            .remove-cart {
+                display: block;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .btn-primary {
+                margin-top: 1rem;
+            }
+        }
+</style>
+<div class="container my-5">
+    <div class="row">
+        {% if cart %}
+            <h1 class="text-center mb-5">Shopping cart</h1>
+            <div class="col-sm-8">
+                <div class="cart">
+                    <div class="cart-body">
+                        <h3>Cart</h3>
+                        {% for item in cart %}
+                            <div class="row">
+                                <div class="col-sm-3 text-center align-self-center">
+                                    <img src="{{ item.product.product_image.url }}" alt="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div>
+                                        <h5>{{ item.product.title }}</h5>
+                                        <p class="mb-2 text-muted small">{{ item.product.description }}</p>
+                                        <div class="my-3">
+                                            <label for="quantity">Quantity:</label>
+                                            <a class="minus-cart btn" pid="{{ item.product.id }}"><i class="fas fa-minus-square fa-lg"></i></a>
+                                            <span id="quantity-{{ item.product.id }}">{{ item.quantity }}</span>
+                                            <a class="plus-cart btn" pid="{{ item.product.id }}"><i class="fas fa-plus-square fa-lg"></i></a>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="#" class="remove-cart btn btn-sm btn-secondary mr-3" pid="{{ item.product.id }}">Remove item</a>
+                                            <p class="mb-0"><span><strong>RS. {{ item.product.discounted_price }}</strong></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="text-muted">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>The Total Amount of</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Amount <span id="amount">{{ amount }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">Shopping <span id="shopping-amount">RS. 40.00</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>Total</strong> <small>(including GST)</small>
+                                </div>
+                                <span id="total-amount"><strong>RS. {{ totalamount }}</strong></span>
+                            </li>
+                        </ul>
+                        <div class="d-grid"><a href="{% url 'checkout' %}" class="btn btn-primary">Place Order</a></div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h1 class="text-center mb-5">Cart is Empty</h1>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".plus-cart").click(function () {
+            var id = $(this).attr("pid");
+            var quantityElement = $("#quantity-" + id);
+            var quantity = parseInt(quantityElement.text());
+            quantity += 1;
+            quantityElement.text(quantity);
+
+            updateCart(id, quantity);
+        });
+
+        $(".minus-cart").click(function () {
+            var id = $(this).attr("pid");
+            var quantityElement = $("#quantity-" + id);
+            var quantity = parseInt(quantityElement.text());
+            if (quantity > 1) {
+                quantity -= 1;
+                quantityElement.text(quantity);
+
+                updateCart(id, quantity);
+            }
+        });
+
+        $(".remove-cart").click(function () {
+            var id = $(this).attr("pid");
+
+            $.ajax({
+                type: "GET",
+                url: "/removecart/",
+                data: {
+                    prod_id: id
+                },
+                success: function (data) {
+                    if (data.success_message) {
+                        // Implement logic for successful removal
+                        window.location.reload(); // Reload the page for simplicity
+                    }
+                }
+            });
+        });
+
+        function updateCart(id, quantity) {
+            $.ajax({
+                type: "GET",
+                url: "/pluscart/",
+                data: {
+                    prod_id: id,
+                    quantity: quantity
+                },
+                success: function (data) {
+                    // Update total amount and other relevant elements
+                    document.getElementById("amount").innerText = data.amount;
+                    document.getElementById("total-amount").innerText = "RS. " + data.totalamount;
+                }
+            });
+        }
+    });
+</script>
+
+
+{% endblock main-content %}

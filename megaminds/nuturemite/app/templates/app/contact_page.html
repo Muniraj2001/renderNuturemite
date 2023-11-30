@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+    <h2>Contact Us</h2>
+    <form method="post" action="{% url 'contact_page' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock main-content %}

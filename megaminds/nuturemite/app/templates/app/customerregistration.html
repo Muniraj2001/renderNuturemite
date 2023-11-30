@@ -1,0 +1,117 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Customer Registration{% endblock title %}
+
+{% block main-content %}
+<style>
+    /* Add custom styles for the customer registration form */
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .col-sm-6 {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    h3 {
+        color: #007bff;
+    }
+
+    hr {
+        border-color: #007bff;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    small {
+        color: #6c757d;
+    }
+
+    .alert {
+        margin-top: 10px;
+    }
+
+    /* Add more custom styles as needed */
+</style>
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3>Customer Registration</h3>
+            <hr>
+            <form action="" method="post" novalidate class="shadow p-5">
+                {% csrf_token %}
+                {% for fm in form %}
+                   {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors | striptags}}</small>
+                   <br>
+                {% endfor %}
+                <input type="submit" value="Submit" class="btn btn-primary"> <br>
+
+                <div class="text-center text-primary fw-bold">
+                    <small>Existing User ? <a href="{% url 'login' %}" class="text-danger">Login Now</a></small>
+                </div>
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if messages %}
+                    {% for msg in messages %}
+                       <div class="alert alert-{{msg.tags}}" role="alert">
+                          {{msg}}
+                       </div>
+                    {% endfor %}
+                {% endif %}   
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

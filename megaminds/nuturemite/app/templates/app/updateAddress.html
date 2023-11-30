@@ -1,0 +1,96 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Product Details{% endblock title %}
+
+{% block styles %}
+<style>
+    /* Additional Custom Styles */
+    body {
+        background-color: #f8f9fa;
+        color: #343a40; /* Set text color to a dark color */
+    }
+
+    .container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 20px;
+    }
+
+    h3 {
+        color: #343a40; /* Set text color to a dark color */
+    }
+
+    form {
+        color: #343a40; /* Set text color to a dark color */
+    }
+
+    label {
+        color: #343a40; /* Set text color to a dark color */
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 10px;
+        margin-top: 15px;
+    }
+    .form-control {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: rgb(19, 18, 19) !important;
+    }
+</style>
+{% endblock styles %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <h3>Welcome <span class="text-capitalize">{{ request.user }}</span></h3>
+    </div>
+    <div class="col-sm-8 offset-sm-1">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for fm in form %}
+                <div class="mb-3">
+                    {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                </div>
+            {% endfor %}
+            <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{% url 'address' %}" type="button" class="btn btn-danger ml-2">Back</a>
+            </div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger mt-4">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock main-content %}
