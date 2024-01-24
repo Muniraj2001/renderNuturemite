@@ -1,0 +1,600 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Checkout{% endblock title %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #ffffff;
+        color: #343a40;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 800px;
+        margin-top: 50px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .fw-bold {
+        font-weight: bold;
+    }
+
+    .total-cost {
+        background-color: #ffc107;
+        color: #212529;
+        padding: 10px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: #212529;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        background-color: #d39e00;
+    }
+    
+</style>
+{% endblock styles %}
+
+{% block main-content %}
+
+<!-- <div class="container">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-header">Order Summary</div>
+        <div class="card-body">
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <div>
+                        <h5>{{ item.product.title }}</h5>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p class="fw-bold">Price: {{ item.product.discounted_price }}</p>
+                    </div>
+                    <img src="{{ item.product.product_image.url }}" alt="{{ item.product.title }}" height="80" width="80">
+                </div>
+            {% endfor %}
+            <p class="total-cost">Total Cost + Rs. 40 = {{ totalamount }}</p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header">Select Shipping Address</div>
+        <div class="card-body">
+            <form method="post" id="myform">
+                {% csrf_token %}
+                {% for ad in add %}
+                
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5>{{ ad.name }}</h5>
+                            <p>Mobile: {{ ad.mobile }}</p>
+                            <p>{{ ad.locality }} {{ ad.city }} - {{ ad.zipcode }}</p>
+                        </div>
+                        <div class="form-check mt-2 mb-3">
+                            <input type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
+                            <label class="form-check-label fw-bold" for="custadd{{ forloop.counter }}">
+                                Address: {{ forloop.counter }}
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <div class="p-4 my-4 rounded-lg bg-white">
+                    <div class="coupon-container">
+                        <p class="mb-4 font-bold leading-5 text-center" style="font-weight: bold; font-size: 20px;">Apply coupons &amp; exciting offers!</p>
+                        {% for coupon in coupons %}
+                        <div class="coupon py-2 flex gap-3 justify-between border-b border-gray-light">
+                            <div class="details">
+                                <div class="flex gap-1">
+                                    <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                                    <span class="font-bold text-sm"style="font-weight: bold;">{{ coupon.code }}</span>
+                                </div>
+                                <div class="text-xs mt-1 text-gray">Get Flat {{ coupon.discount_percent }}% off, upto ₹{{ coupon.minimum_order_value }}/-.
+                                    Minimum order value ₹{{ coupon.minimum_order_value }}/-</div>
+                            </div>
+                            <div role="presentation" class="">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="coupon_code" value="{{ coupon.code }}">
+                                    <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                
+                    <div class="gift-voucher-container">
+                        <p class="mb-4 font-bold leading-5 mt-4">Gift Vouchers:</p>
+                        {% for gift_voucher in gift_vouchers %}
+                        <div class="gift-voucher py-2 flex gap-3 justify-between border-b border-gray-light">
+                            <div class="details">
+                                <div class="flex gap-1">
+                                    <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                                    <span class="font-bold text-sm" style="font-weight: bold;">{{ gift_voucher.code }}</span>
+                                </div>
+                                <div class="text-xs mt-1 text-gray">Get ₹{{ gift_voucher.value }} off, upto ₹{{ gift_voucher.minimum_order_value }}/-.
+                                    Minimum order value ₹{{ gift_voucher.minimum_order_value }}/-</div>
+                            </div>
+                            <div role="presentation" class="">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="gift_voucher_code" value="{{ gift_voucher.code }}">
+                                    <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                
+                    <div class="wallet-container">
+                        <p class="mb-4 font-bold leading-5">Wallet Information:</p>
+                        <p class="wallet-info">Your Rewards Points: {{ rewards_points }}</p>
+                        <p class="wallet-info">Your Store Wallet Balance: ₹{{ store_wallet_balance }}</p>
+                    </div>
+                </div>
+
+                <label for="totalamount" class="form-label">Total Amount</label>
+                <input type="number" class="form-control mb-3" name="totalamount" value="{{ totalamount }}" readonly>
+                
+                <div style="
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+">
+
+  <label for="delivery_pincode" style="
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+  ">Enter Delivery Pin Code:</label>
+
+  <input type="text" name="delivery_pincode" name="custid" id="delivery_pincode" required style="
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  ">
+
+  <button type="submit" class="btn btn-success fw-bold" style="
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  ">Enter Pin Code</button>
+</div><br>
+
+                <div class="text-end">
+                    <button id="rzp-button1" type="button" class="btn btn-warning fw-bold">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+    <style>
+        /* Custom styles for wallet section */
+        .wallet-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+    
+        .wallet-info {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    
+        .wallet-balance {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    
+        /* Additional styles for coupons and gift vouchers */
+        .coupon-container,
+        .gift-voucher-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    
+        .coupon, .gift-voucher {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+    
+        .coupon img, .gift-voucher img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+    
+        .coupon .details, .gift-voucher .details {
+            flex-grow: 1;
+        }
+    
+        .coupon button, .gift-voucher button {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        /* Custom styles for Razorpay payment button */
+        #rzp-button1 {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    
+    <!-- <div class="p-4 my-4 rounded-lg bg-white">
+        <div class="coupon-container">
+            <p class="mb-4 font-bold leading-5 text-center" style="font-weight: bold; font-size: 20px;">Apply coupons &amp; exciting offers!</p>
+            {% for coupon in coupons %}
+            <div class="coupon py-2 flex gap-3 justify-between border-b border-gray-light">
+                <div class="details">
+                    <div class="flex gap-1">
+                        <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                        <span class="font-bold text-sm"style="font-weight: bold;">{{ coupon.code }}</span>
+                    </div>
+                    <div class="text-xs mt-1 text-gray">Get Flat {{ coupon.discount_percent }}% off, upto ₹{{ coupon.minimum_order_value }}/-.
+                        Minimum order value ₹{{ coupon.minimum_order_value }}/-</div>
+                </div>
+                <div role="presentation" class="">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="coupon_code" value="{{ coupon.code }}">
+                        <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="gift-voucher-container">
+            <p class="mb-4 font-bold leading-5 mt-4">Gift Vouchers:</p>
+            {% for gift_voucher in gift_vouchers %}
+            <div class="gift-voucher py-2 flex gap-3 justify-between border-b border-gray-light">
+                <div class="details">
+                    <div class="flex gap-1">
+                        <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                        <span class="font-bold text-sm" style="font-weight: bold;">{{ gift_voucher.code }}</span>
+                    </div>
+                    <div class="text-xs mt-1 text-gray">Get ₹{{ gift_voucher.value }} off, upto ₹{{ gift_voucher.minimum_order_value }}/-.
+                        Minimum order value ₹{{ gift_voucher.minimum_order_value }}/-</div>
+                </div>
+                <div role="presentation" class="">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="gift_voucher_code" value="{{ gift_voucher.code }}">
+                        <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="wallet-container">
+            <p class="mb-4 font-bold leading-5">Wallet Information:</p>
+            <p class="wallet-info">Your Rewards Points: {{ rewards_points }}</p>
+            <p class="wallet-info">Your Store Wallet Balance: ₹{{ store_wallet_balance }}</p>
+        </div>
+    </div> -->
+    </div>
+    <link rel="canonical" href="https://www.getsupp.com"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.getsupp.com/static/misc/favicons/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.getsupp.com/static/misc/favicons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://www.getsupp.com/static/misc/favicons/favicon-16x16.png"/>
+<link rel="manifest" href="https://www.getsupp.com/static/misc/favicons/site.webmanifest"/>
+
+
+<link rel="preload" href="/static/misc/banners/121220231232/protein-non-sale-wd.webp" as="image" fetchpriority="high"/>
+<meta name="next-head-count" content="14"/>
+<link rel="preload" href="https://www.getsupp.com/static/_next/static/css/176b86a87b7b1c78.css" as="style"/>
+<link rel="stylesheet" href="https://www.getsupp.com/static/_next/static/css/176b86a87b7b1c78.css" data-n-g=""/>
+<noscript data-n-css=""></noscript>
+<script defer="" nomodule="" src="https://www.getsupp.com/static/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/webpack-7fc193d76805928e.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/framework-e58e0ba902f7ed85.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/main-6168a29de0c636ce.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/pages/_app-bec1e8f86893a351.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/644-00ce82daf92f0af1.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/237-473ecb040b90c621.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/pages/index-743c4002faa2dcf8.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/uCBYCHDgwB-Rm6CP5-jHU/_buildManifest.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/uCBYCHDgwB-Rm6CP5-jHU/_ssgManifest.js" defer=""></script>
+
+   
+    <body class="min-h-screen">
+        <div class="min-h-screen h-auto lg:bg-gray-thin lg:p-5 lg:pt-10 lg:-mt-4 lg:pb-10">
+            <div class="max-w-[1580px] mx-auto lg:flex gap-5" style="padding-left: 170px; padding-right: 200px;">
+                <div class="w-full h-full px-10 bg-white max-w-3xl rounded-lg min-h-[85vh] container-fluid" style="width: 800px;">
+                    <div class="flex items-center max-w-xl">
+                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+                            stroke-linejoin="round" class="text-2xl" height="1em" width="1em"
+                            xmlns="http://www.w3.org/2000/svg">
+                            
+                        </svg>
+                        
+                    </div>
+    
+                    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-header">Order Summary</div>
+        <div class="card-body">
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <div>
+                        <h5>{{ item.product.title }}</h5>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p class="fw-bold">Price: {{ item.product.discounted_price }}</p>
+                    </div>
+                    <img src="{{ item.product.product_image.url }}" alt="{{ item.product.title }}" height="80" width="80">
+                </div>
+            {% endfor %}
+            <p class="total-cost">Total Cost + Rs. 40 = {{ totalamount }}</p>
+        </div>
+    </div>
+                </div>
+                <div class="min-w-[382px] sticky top-[100px] container-fluid" style="width: 800px;">
+                    <div class="bg-white px-8 rounded-lg text-sm lg:text-base">
+                        <div class="card mt-3">
+                            <div class="card-header">Select Shipping Address</div>
+                            <div class="card-body">
+                                <form method="post" id="myform">
+                                    {% csrf_token %}
+                                    {% for ad in add %}
+                                    
+                                        <div class="card mb-2">
+                                            <div class="card-body">
+                                                <h5>{{ ad.name }}</h5>
+                                                <p>Mobile: {{ ad.mobile }}</p>
+                                                <p>{{ ad.locality }} {{ ad.city }} - {{ ad.zipcode }}</p>
+                                            </div>
+                                            <div class="form-check mt-2 mb-3">
+                                                <input type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
+                                                <label class="form-check-label fw-bold" for="custadd{{ forloop.counter }}">
+                                                    Address: {{ forloop.counter }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    
+                                    <!-- Coupons, gift vouchers, wallet information, and other existing code -->
+                                    <div class="p-4 my-4 rounded-lg bg-white">
+                                        <div class="coupon-container">
+                                            <p class="mb-4 font-bold leading-5 text-center" style="font-weight: bold; font-size: 20px;">Apply coupons &amp; exciting offers!</p>
+                                            {% for coupon in coupons %}
+                                            <div class="coupon py-2 flex gap-3 justify-between border-b border-gray-light">
+                                                <div class="details">
+                                                    <div class="flex gap-1">
+                                                        <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                                                        <span class="font-bold text-sm"style="font-weight: bold;">{{ coupon.code }}</span>
+                                                    </div>
+                                                    <div class="text-xs mt-1 text-gray">Get Flat {{ coupon.discount_percent }}% off, upto ₹{{ coupon.minimum_order_value }}/-.
+                                                        Minimum order value ₹{{ coupon.minimum_order_value }}/-</div>
+                                                </div>
+                                                <div role="presentation" class="">
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="coupon_code" value="{{ coupon.code }}">
+                                                        <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    
+                                        <div class="gift-voucher-container">
+                                            <p class="mb-4 font-bold leading-5 mt-4">Gift Vouchers:</p>
+                                            {% for gift_voucher in gift_vouchers %}
+                                            <div class="gift-voucher py-2 flex gap-3 justify-between border-b border-gray-light">
+                                                <div class="details">
+                                                    <div class="flex gap-1">
+                                                        <img src="https://www.getsupp.com/static/media/moved/offer-new-icon.svg" alt="offer-icon" class="w-5 h-5">
+                                                        <span class="font-bold text-sm" style="font-weight: bold;">{{ gift_voucher.code }}</span>
+                                                    </div>
+                                                    <div class="text-xs mt-1 text-gray">Get ₹{{ gift_voucher.value }} off, upto ₹{{ gift_voucher.minimum_order_value }}/-.
+                                                        Minimum order value ₹{{ gift_voucher.minimum_order_value }}/-</div>
+                                                </div>
+                                                <div role="presentation" class="">
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="gift_voucher_code" value="{{ gift_voucher.code }}">
+                                                        <button type="submit" class="text-sm font-bold text-primary-dark min-w-[60px]">Apply</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    
+                                        <div class="wallet-container">
+                                            <p class="mb-4 font-bold leading-5">Wallet Information:</p>
+                                            <p class="wallet-info">Your Rewards Points: {{ rewards_points }}</p>
+                                            <p class="wallet-info">Your Store Wallet Balance: ₹{{ store_wallet_balance }}</p>
+                                        </div>
+                                    </div>
+                    
+                                    <!-- Additional code for Razorpay integration -->
+                                    <label for="totalamount" class="form-label">Total Amount</label>
+                                    <input type="number" class="form-control mb-3" name="totalamount" value="{{ totalamount }}" readonly>
+                                    
+                                    <div style="
+                      max-width: 400px;
+                      margin: 0 auto;
+                      text-align: center;
+                      padding: 20px;
+                      border: 1px solid #eee;
+                      border-radius: 8px;
+                      background-color: #fff;
+                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    ">
+                    
+                      <label for="delivery_pincode" style="
+                        display: block;
+                        font-size: 14px;
+                        margin-bottom: 8px;
+                        color: #333;
+                        font-weight: bold;
+                      ">Enter Delivery Pin Code:</label>
+                    
+                      <input type="text" name="delivery_pincode" name="custid" id="delivery_pincode" required style="
+                        width: 100%;
+                        padding: 10px;
+                        box-sizing: border-box;
+                        margin-bottom: 15px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                      ">
+                    
+                      <button type="submit" class="btn btn-success fw-bold" style="
+                        padding: 12px 20px;
+                        background-color: #4CAF50;
+                        color: #fff;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: background-color 0.3s;
+                      ">Enter Pin Code</button>
+                    </div><br>
+                    
+                                    <!-- Razorpay payment button -->
+                                    <div class="text-end">
+                                        <button id="rzp-button1" type="button" class="btn btn-warning fw-bold w-full bg-red py-3 rounded-md text-lg shadow-btn text-white font-bold">Proceed to Payment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div
+                        class="py-4 px-5 mt-4 max-w-xl cursor-pointer bg-white border-2 border-primary rounded-lg flex gap-4 items-center">
+                        <img src="https://www.getsupp.com/static/media/moved/safety-shield-icon.svg" alt="shield-icon"
+                            class="">
+                        <div class="text-sm m-0 p-0">
+                            <h4 class="my-1 text-base text-primary-dark">Genuine Product Guarantee</h4>
+                            This product has been sourced directly from the brand and has been verified for your safety.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock main-content %}
+    
+    {% block payment-gateway %}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            "key": "rzp_test_hjkpYMfrj1twiE",
+            "amount": "{{ razoramount }}",
+            "currency": "INR",
+            "name": "Nuturemite",
+            "description": "Purchase Product",
+            "order_id": "{{ order_id }}",
+            "handler": function (response) {
+                var form = document.getElementById("myform");
+                var order_id = response.razorpay_order_id;
+                var payment_id = response.razorpay_payment_id;
+                var cust_id = encodeURIComponent(form.elements["custid"].value);
+
+                // Construct the URL with the corrected cust_id value
+                var url = '/paymentdone/?order_id=' + order_id + '&payment_id=' + payment_id + '&cust_id=' + cust_id;
+
+                // Redirect to the constructed URL
+                window.location.href = url;
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.description);
+        });
+
+        document.getElementById('rzp-button1').onclick = function (e) {
+            // Set the selected customer ID
+            var selectedCustIdElement = document.querySelector('input[name="custid"]:checked');
+            if (selectedCustIdElement) {
+                var selectedCustId = selectedCustIdElement.value;
+                console.log("Selected Customer ID:", selectedCustId);
+
+                // Open Razorpay payment gateway
+                rzp1.open();
+                e.preventDefault();
+            } else {
+                console.error("No customer ID selected");
+            }
+        };
+    });
+</script>
+{% endblock payment-gateway %}

@@ -1,0 +1,578 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Blog{% endblock title %}
+
+{% block main-content %}
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.getsupp.com/static/misc/favicons/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.getsupp.com/static/misc/favicons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://www.getsupp.com/static/misc/favicons/favicon-16x16.png"/>
+<link rel="manifest" href="https://www.getsupp.com/static/misc/favicons/site.webmanifest"/>
+
+
+<link rel="preload" href="/static/misc/banners/121220231232/protein-non-sale-wd.webp" as="image" fetchpriority="high"/>
+<meta name="next-head-count" content="14"/>
+<link rel="preload" href="https://www.getsupp.com/static/_next/static/css/176b86a87b7b1c78.css" as="style"/>
+<link rel="stylesheet" href="https://www.getsupp.com/static/_next/static/css/176b86a87b7b1c78.css" data-n-g=""/>
+<noscript data-n-css=""></noscript>
+<script defer="" nomodule="" src="https://www.getsupp.com/static/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/webpack-7fc193d76805928e.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/framework-e58e0ba902f7ed85.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/main-6168a29de0c636ce.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/pages/_app-bec1e8f86893a351.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/644-00ce82daf92f0af1.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/237-473ecb040b90c621.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/chunks/pages/index-743c4002faa2dcf8.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/uCBYCHDgwB-Rm6CP5-jHU/_buildManifest.js" defer=""></script>
+<script src="https://www.getsupp.com/static/_next/static/uCBYCHDgwB-Rm6CP5-jHU/_ssgManifest.js" defer=""></script>
+
+                 
+
+<!-- Assuming you have the necessary Django template tags loaded -->
+{% load static %}
+
+<!-- <div class="md:w-[940px] lg:w-[1180px] max-w-full mx-auto p-4">
+  <p class="text-sm font-bold mb-2 lg:text-lg">You are reviewing your recent purchase:</p>
+  <a class="shadow-mddrop rounded border-gray-light max-w-xl" href="{% url 'product-detail' product.id %}">
+    <div role="presentation" class="h-full" style="width: 1500px">
+      <div class="bg-white h-fit grid grid-cols-5 items-center gap-1 border-y border-gray-light relative rounded border rounded max-w-xl ">
+        <div class="relative h-full col-span-2 img-gray-bg flex justify-center items-center">
+          <img alt="{{ product.title }} img" src="{{ product.product_image.url }}" class="h-[160px] object-contain aspect-square" style="height: 200px; width: 250px;">
+          {% if product.discount_percentage > 0 %}
+            <div class="absolute z-20 flex justify-center items-center bg-white top-2 right-2 h-4 w-4 border-2 lg:h-5 lg:w-5 border-red">
+              <div class="rounded-full h-2 w-2 lg:h-3 lg:w-3 bg-red"></div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="p-2 col-span-3 pr-3 lg:p-4">
+          <div class="flex items-center flex-wrap"></div>
+          <p class="text-sm line-clamp-3 hover:text-primary-dark">{{ product.title }}</p>
+          <p class="bg-gray-thin text-xs font-semibold text-black p-1 w-fit rounded mt-1 line-clamp-2"></p>
+          <div class="flex items-baseline my-1 text-black">
+            <sup class="text-sm font-bold">₹</sup>
+            <span class="text-2xl font-bold">{{ product.discounted_price }}</span>
+            <span class="text-xs font-bold">.00</span>
+            <span class="opacity-40 text-sm mx-1.5 line-through font-semibold">₹{{ product.selling_price }}</span>
+            {% if product.discount_percentage > 0 %}
+              <span class="text-primary text-sm font-semibold">({{ product.discount_percentage }}% off)</span>
+            {% endif %}
+          </div>
+          <div class="flex justify-end items-center mt-2">
+            <div role="presentation" class="">
+              <a href="{% url 'cart' %}">
+                <button class="rounded-sm py-3 flex justify-center items-center font-bold lg:py-4 bg-red text-white shadow-red-200 shadow-smdrop w-28 h-9 text-sm shadow-none">Buy Now</button>
+              </a>
+            </div>
+            <div class="bottom-2 left-2 absolute py-0.5 px-1 text-black font-semibold rounded-sm bg-white bg-opacity-60 border border-gray-extralight flex items-center">
+				<span class="text-sm mr-0.5">{{ product.average_rating|default:"N/A"|floatformat:1 }} </span>
+  
+				<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-sm" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+					<g>
+						<path fill="none" d="M0 0h24v24H0z"></path>
+						<path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+					</g>
+				</svg>
+				<div class="w-[1px] bg-black h-[14px] mx-1"></div>
+				<span class="text-sm">{{ product.reviews.count }}</span>
+			</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</div> -->
+
+<div class="bg-gray-thin max-w-xl mx-auto md:bg-white md:border-b-4 md:border-gray-thin">
+    <div class="md:w-[940px] lg:w-[1180px] max-w-full mx-auto p-4">
+        <p class="text-sm font-bold mb-2 lg:text-lg">You are reviewing your recent purchase:</p>
+        <div role="presentation" class="h-full">
+            <div class="bg-white h-fit grid grid-cols-5 items-center gap-1 border-y border-gray-light relative rounded border rounded max-w-xl">
+                <div class="relative h-full col-span-2 img-gray-bg flex justify-center items-center">
+                    <img alt="product img" src="{{ product.product_image.url }}" class="h-[160px] object-contain aspect-square">
+                </div>
+                <div class="p-2 col-span-3 pr-3 lg:p-4">
+                    <div class="flex items-center flex-wrap"></div>
+                    <p class="text-sm line-clamp-3 hover:text-primary-dark">{{ product.title }}</p>
+                    <p class="bg-gray-thin text-xs font-semibold text-black p-1 w-fit rounded mt-1 line-clamp-2">200 gm</p>
+                    <div class="flex items-baseline my-1 text-black">
+                        <sup class="text-sm font-bold">₹</sup>
+                        <span class="text-2xl font-bold">{{ product.discounted_price }}</span>
+                        <span class="text-xs font-bold">.00</span>
+                        <span class="opacity-40 text-sm mx-1.5 line-through font-semibold">{{ product.selling_price }}</span>
+                        <span class="text-primary text-sm font-semibold">{{ product.discount_percentage }}% off</span>
+                    </div>
+                    <div class="flex justify-end items-center mt-2">
+                        <div role="presentation" class="">
+                            <a href="{% url 'cart' %}" class="rounded-sm py-3 flex justify-center items-center font-bold lg:py-4 bg-red text-white shadow-red-200 shadow-smdrop w-28 h-8 text-sm shadow-none ml-auto">
+                                Buy Now
+                            </a>                       
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="pt-4 lg:pt-6 border-b-4 border-gray-thin" style="padding-left: 750px; padding-right: 750px;">
+	<div class="px-4 text-lg text-black font-bold md:text-center lg:text-center lg:text-2xl">Product review</div>
+	<div class="px-4 pt-3 pb-4 flex items-stretch gap-7 overflow-x-scroll hide_scroll_bar snap-x snap-mandatory scroll-pl-4 lg:grid lg:grid-cols-1">
+		  <div role="presentation" class="h-full">
+			<div class="bg-white min-w-[200px] max-w-[215px] min-h-[310px] flex flex-col h-full border border-gray-thin rounded animate-product-img snap-start">
+			  <div class="relative img-gray-bg mx-auto overflow-hidden p-2">
+				<a href="{% url 'product-detail' product.id %}">
+				  <img alt="{{ product.name }}" loading="lazy" width="276" height="256" decoding="async" data-nimg="1"
+					  class="mx-auto object-contain aspect-square cursor-pointer" style="color:transparent"
+					  src="{{ product.product_image.url }}">
+			  </a>
+			  <div class="bottom-2 left-2 absolute py-0.5 px-1 text-black font-semibold rounded-sm bg-white bg-opacity-60 border border-gray-extralight flex items-center">
+				<span class="text-sm mr-0.5">{{ product.average_rating|default:"N/A"|floatformat:1 }} </span>
+  
+				<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-sm" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+					<g>
+						<path fill="none" d="M0 0h24v24H0z"></path>
+						<path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+					</g>
+				</svg>
+				<div class="w-[1px] bg-black h-[14px] mx-1"></div>
+				<span class="text-sm">{{ product.reviews.count }}</span>
+			</div>
+			  </div>
+			  <div class="p-2 flex-1">
+				<p class="text-xs text-gray">{{ product.category }}</p>
+				<p class="text-sm line-clamp-3 cursor-pointer lg:min-h-[66px] lg:text-base lg:leading-[22px] hover:text-primary-dark">
+				  {{ product.title }}</p>
+			  <p class="bg-gray-thin text-xs font-semibold text-black px-2 py-0.5 w-fit rounded mt-1 line-clamp-2">
+				  {{ product.packaging_details }}</p>
+			  <div class="flex items-baseline my-1 text-black text-lg">
+				  <sup class="text-sm font-bold">₹</sup>
+				  <span class="text-2xl font-bold">{{ product.discounted_price }}</span>
+				  <span class="text-sm font-bold">.00</span>
+				  <span class="opacity-40 text-sm mx-1.5 line-through font-semibold">₹{{ product.selling_price }}</span>
+				  <span class="text-primary text-sm font-semibold">({{ product.discount_percentage }}% off)</span>
+			  </div>
+				<div role="presentation" class="">
+				  <a href="{% url 'cart' %}" class="rounded-sm py-3 flex justify-center items-center font-bold lg:py-4 bg-red text-white shadow-red-200 shadow-smdrop w-28 h-8 text-sm shadow-none ml-auto">
+					Buy Now
+				</a>              
+			  </div>
+			  </div>
+			</div>
+		  </div>
+		</a>
+	</div>
+  </div> -->
+  
+    <!-- Add Review Form -->
+    <!-- <div class="add-review-form">
+        <h4 class="mb-3">Add a Review</h4>
+        <form method="post" action="{% url 'add-review' pk=product.id %}">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div> -->
+
+    <!-- Add a "Go Back" button -->
+    <!-- <a href="{% url 'product-detail' pk=product.id %}" class="btn btn-secondary">Go Back</a> -->
+    
+    <!-- Include necessary scripts -->
+    <!-- ... (include your JS files if needed) ... -->
+
+
+{% endblock main-content %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+	<title>Form Reviews</title>
+   
+</head>
+<body>
+
+    <div class="add-review-form">
+        <h4 class="mb-3">Add a Review</h4>
+        <form method="post" action="{% url 'add-review' pk=product.id %}">
+			<div class="rating">
+				<label for="id_rating" class="visually-hidden">Rating</label>
+				<input type="number" name="rating" id="id_rating" hidden>
+				<i class='bx bx-star star' style="--i: 0;"></i>
+				<i class='bx bx-star star' style="--i: 1;"></i>
+				<i class='bx bx-star star' style="--i: 2;"></i>
+				<i class='bx bx-star star' style="--i: 3;"></i>
+				<i class='bx bx-star star' style="--i: 4;"></i>
+			</div>
+            {% csrf_token %}
+            {{ review_form.as_p }}
+
+            <!-- Display success or error messages -->
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary bg-green">Submit Review</button>
+			<a href="{% url 'product-detail' pk=product.id %}" class="btn btn-secondary">Go Back</a>
+
+        </form>
+    </div>
+</div>
+    
+  
+    <script>
+        const allStar = document.querySelectorAll('.rating .star')
+const ratingValue = document.querySelector('.rating input')
+
+allStar.forEach((item, idx)=> {
+	item.addEventListener('click', function () {
+		let click = 0
+		ratingValue.value = idx + 1
+
+		allStar.forEach(i=> {
+			i.classList.replace('bxs-star', 'bx-star')
+			i.classList.remove('active')
+		})
+		for(let i=0; i<allStar.length; i++) {
+			if(i <= idx) {
+				allStar[i].classList.replace('bx-star', 'bxs-star')
+				allStar[i].classList.add('active')
+			} else {
+				allStar[i].style.setProperty('--i', click)
+				click++
+			}
+		}
+	})
+})
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyYqBSgNO4Ck5g8aQIapkfYG9GA9i4zUJfa" crossorigin="anonymous">
+    <link rel="stylesheet" href="your_combined_styles.css"> <!-- Add your combined styles here -->
+    <style>
+        /* Add any additional styles from Code 1 that are not covered by the external stylesheet */
+        :root {
+            --yellow: #FFBD13;
+            --blue: #4383FF;
+            --blue-d-1: #3278FF;
+            --light: #F5F5F5;
+            --grey: #AAA;
+            --white: #FFF;
+            --shadow: 8px 8px 30px rgba(0, 0, 0, .05);
+        }
+
+        body {
+            background: var(--light);
+            display: horizontal;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .add-review-form {
+            background: var(--white);
+            padding: 2rem;
+            max-width: 576px;
+            width: 100%;
+            border-radius: .75rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin: auto; /* Adjust as needed */
+        }
+
+        .add-review-form h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-gap: .5rem;
+            font-size: 2rem;
+            color: var(--yellow);
+            margin-bottom: 2rem;
+        }
+
+        .rating .star {
+            cursor: pointer;
+        }
+
+        .rating .star.active {
+            opacity: 0;
+            animation: animate .5s calc(var(--i) * .1s) ease-in-out forwards;
+        }
+
+        @keyframes animate {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .rating .star:hover {
+            transform: scale(1.1);
+        }
+
+        textarea {
+            width: 100%;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: .5rem;
+            border: none;
+            outline: none;
+            resize: none;
+            margin-bottom: .5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            grid-gap: .5rem;
+            align-items: center;
+        }
+
+        .btn-group .btn {
+            padding: .75rem 1rem;
+            border-radius: .5rem;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: .875rem;
+            font-weight: 500;
+        }
+
+        .btn-group .btn.submit {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .btn-group .btn.submit:hover {
+            background: var(--blue-d-1);
+        }
+
+        .btn-group .btn.cancel {
+            background: var(--white);
+            color: var(--blue);
+        }
+
+        .btn-group .btn.cancel:hover {
+            background: var(--light);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="add-review-form">
+        <h4>Add a Review</h4>
+        <form method="post" action="{% url 'add-review' pk=product.id %}">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+
+            <div class="rating">
+                <input type="number" name="rating" hidden>
+                <i class='bx bx-star star' style="--i: 0;"></i>
+                <i class='bx bx-star star' style="--i: 1;"></i>
+                <i class='bx bx-star star' style="--i: 2;"></i>
+                <i class='bx bx-star star' style="--i: 3;"></i>
+                <i class='bx bx-star star' style="--i: 4;"></i>
+            </div>
+
+            <textarea name="opinion" cols="30" rows="5" placeholder="Your opinion..."></textarea>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+                <a href="{% url 'product-detail' pk=product.id %}" class="btn btn-secondary">Go Back</a>
+            </div>
+        </form>
+    </div> -->
+
+    <script>
+        // Include the JavaScript logic from Code 1 here
+        const allStar = document.querySelectorAll('.rating .star')
+        const ratingValue = document.querySelector('.rating input')
+
+        allStar.forEach((item, idx) => {
+            item.addEventListener('click', function () {
+                let click = 0
+                ratingValue.value = idx + 1
+
+                allStar.forEach(i => {
+                    i.classList.replace('bxs-star', 'bx-star')
+                    i.classList.remove('active')
+                })
+                for (let i = 0; i < allStar.length; i++) {
+                    if (i <= idx) {
+                        allStar[i].classList.replace('bx-star', 'bxs-star')
+                        allStar[i].classList.add('active')
+                    } else {
+                        allStar[i].style.setProperty('--i', click)
+                        click++
+                    }
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+<div class="page-container">
+ 
+    <!-- Container for the first set of content -->
+    <div class="container-1">
+        <!-- <div class="product-reviews mt-4"> -->
+           <div>
+           
+            <h4 class="mb-3">{{ product.title }} Reviews</h4>
+            <ul class="list-unstyled fs-5" id="reviews-list">
+                <!-- Render the first three reviews -->
+                {% for review in reviews|slice:":50" %}
+                
+                    <li class="review-item">
+                        <!-- <div class="user-info">
+                            <img class="user-avatar" src="https://th.bing.com/th/id/R.6b0022312d41080436c52da571d5c697?rik=Ql6UUNosrWAY0w&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fpng-user-icon-icons-logos-emojis-users-2400.png&ehk=8agkVrs8bo9zafVF9Qk4%2bFqv5IwaEZrb8DwX%2ftfJtNc%3d&risl=&pid=ImgRaw&r=0" alt="User Avatar">
+                            <strong>{{ review.user.username }}</strong>
+                        </div> -->
+                        <div class="flex items-top gap-3">
+                           <img src="https://www.getsupp.com/static/media/misc/icons/user_v2-min.svg" class="rounded-full w-6 h-6 lg:w-8 lg:h-8" alt="user_avtar"/>
+                           <div>
+                        <div class="font-bold text-sm capitalize h-fit flex items-center gap-1">
+                           <strong>{{ review.user.username }}</strong>
+                           <img src="https://www.getsupp.com/static/misc/icons/verified-min.svg" class="rounded-full w-4 h-4" alt="verified"/>
+                       </div>
+                        <!-- <div class="d-flex flex-row">
+                            {% for _ in review.rating_range %}
+                                <i class='bx bxs-star'></i>
+                            {% endfor %}
+                        </div> -->
+                        <div class="flex gap-3 items-center mt-0.5">
+                           <div class="flex items-center">
+                               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-xs mr-0.5 lg:mr-1 lg:text-base  " height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                   <g>
+                                       <path fill="none" d="M0 0h24v24H0z"></path>
+                                       <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                   </g>
+                               </svg>
+                               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-xs mr-0.5 lg:mr-1 lg:text-base  " height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                   <g>
+                                       <path fill="none" d="M0 0h24v24H0z"></path>
+                                       <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                   </g>
+                               </svg>
+                               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-xs mr-0.5 lg:mr-1 lg:text-base  " height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                   <g>
+                                       <path fill="none" d="M0 0h24v24H0z"></path>
+                                       <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                   </g>
+                               </svg>
+                               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-xs mr-0.5 lg:mr-1 lg:text-base  " height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                   <g>
+                                       <path fill="none" d="M0 0h24v24H0z"></path>
+                                       <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                   </g>
+                               </svg>
+                               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-xs mr-0.5 lg:mr-1 lg:text-base  " height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                   <g>
+                                       <path fill="none" d="M0 0h24v24H0z"></path>
+                                       <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                   </g>
+                               </svg>
+                           </div>
+                           
+                           <div class="text-xs">{{ review.date_added }}</div>
+                       </div>
+                       <div class="mt-1 text-sm">{{ review.comment }}</div><br>
+                       <div class="like-dislike-buttons">
+                           <!-- Add your like and dislike buttons here -->
+                           <button class="" style="font-size: 12px;"><i class="fas fa-thumbs-up"></i></button>
+                           <button class="" style="font-size: 12px;"><i class="fas fa-thumbs-down"></i></button>
+                       </div>
+                       
+                    </li><hr>
+                {% endfor %}
+            </ul>
+            
+
+            
+
+            
+        </div>
+    </div>
+<style>
+    body{
+        background-color: #FFF;
+    }
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .flex-item {
+            width: 48%;
+        }
+    </style>
+</style>
+{% endblock content %}

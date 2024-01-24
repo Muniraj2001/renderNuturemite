@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Blog{% endblock title %}
+
+{% block main-content %}
+<form method="post" action="{% url 'add_review' product.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Review</button>
+</form>
+
+{% endblock main-content %}

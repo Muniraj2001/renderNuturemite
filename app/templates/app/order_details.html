@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Order Details{% endblock title %}
+
+{% block styles %}
+<!-- Add any additional styles for order details page if needed -->
+{% endblock styles %}
+
+{% block main-content %}
+<div class="container">
+    <h3>Order Details - Order #{{ order.id }}</h3>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Shipping Label
+        </div>
+        <div class="card-body">
+            <p><a href="{{ order.shipping_label.label_url }}" target="_blank">View Shipping Label</a></p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Delivery Partner
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ delivery_partner.name }}</p>
+            <p><strong>Phone:</strong> {{ delivery_partner.phone }}</p>
+            <p><strong>Email:</strong> {{ delivery_partner.email }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Order Notifications
+        </div>
+        <div class="card-body">
+            {% for notification in order_notifications %}
+            <p>{{ notification.message }} - {{ notification.sent_at }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            WhatsApp Chat
+        </div>
+        <div class="card-body">
+            {% for chat in whatsapp_chats %}
+            <p>{{ chat.message }} - {{ chat.sent_at }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Add other order details as needed -->
+
+</div>
+{% endblock main-content %}

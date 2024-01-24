@@ -1,0 +1,144 @@
+
+
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>{{ post.title }} - Comments</h2>
+
+  <div class="blog-post container">
+    <p class="post-meta">Posted on {{ post.posted_date|date:"F d, Y" }} by {{ post.author.username }}</p>
+    <p class="post-content">{{ post.content }}</p>
+
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+      <p><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</p>
+    {% endfor %}
+
+    <!-- Add Comment Button -->
+    <button id="addCommentButton" data-post-id="{{ post.id }}">Add Comment</button>
+
+    <!-- Form for Adding Comments -->
+    <form id="commentForm" style="display: none;">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="commentContent">Your Comment:</label>
+        <textarea class="form-control" id="commentContent" placeholder="Add your comment"></textarea>
+      </div>
+      <button type="button" class="btn btn-primary" id="submitCommentButton" data-post-id="{{ post.id }}">Submit Comment</button>
+    </form>
+  </div>
+
+  <style>
+    .blog-post {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    #addCommentButton {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    #addCommentButton:hover {
+      background-color: #45a049;
+    }
+
+    #commentForm {
+      margin-top: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      resize: vertical;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #submitCommentButton {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    #submitCommentButton:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Attach event listener to Add Comment Button
+      $('#addCommentButton').click(function () {
+        $('#commentForm').show();
+      });
+
+      // Attach event listener to Submit Comment Button
+      $('#submitCommentButton').click(function () {
+        const postId = $(this).data('post-id');
+        const content = $('#commentContent').val();
+
+        $.ajax({
+          url: `/add_comment/${postId}/`,
+          method: 'POST',
+          headers: { 'X-CSRFToken': getCookie('csrftoken') },
+          data: { content: content },
+          success: function (data) {
+            // Handle the response if needed
+            console.log(data);
+            // Optionally, close the comment form after submitting
+            $('#commentForm').hide();
+          },
+          error: function (error) {
+            console.error('Error:', error);
+          },
+        });
+      });
+
+      // Function to get CSRF token from cookies
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    });
+  </script>
+{% endblock %}
+
+
+
+
+
+

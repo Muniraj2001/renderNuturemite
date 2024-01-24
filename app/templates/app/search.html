@@ -1,0 +1,1824 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Search Result{% endblock title %}
+
+{% block main-content %}
+<link rel="preload" href="https://www.getsupp.com/static/_next/static/css/e241500362e81440.css" as="style"/>
+        <link rel="stylesheet" href="https://www.getsupp.com/static/_next/static/css/e241500362e81440.css" data-n-g=""/>
+        <noscript data-n-css=""></noscript>
+        <script defer="" nomodule="" src="https://www.getsupp.com/static/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/webpack-7fc193d76805928e.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/framework-e58e0ba902f7ed85.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/main-6168a29de0c636ce.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/pages/_app-a6b61c49b17fc5c7.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/ff027f1f-e00fbd2872ad2ebc.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/fe831498-97da85c44fdf62cb.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/e4a1f094-438661f5d2743ba6.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/163-d899dbc3a5988336.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/846-da53436794705f03.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/chunks/pages/%5Bslug1%5D/kl-8f79d5aee06f9157.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/80Ub7rCtZCZHorMFIzzvD/_buildManifest.js" defer=""></script>
+        <script src="https://www.getsupp.com/static/_next/static/80Ub7rCtZCZHorMFIzzvD/_ssgManifest.js" defer=""></script>
+
+        <div class="h-fit w-full text-center text-white" style="background: linear-gradient(90deg, rgb(254, 96, 76) 0%, rgb(247, 131, 21) 100%);">
+            <div class="md:w-[940px] lg:w-[1180px] max-w-full mx-auto p-3 text-xs lg:px-4 lg:flex lg:justify-center lg:items-center lg:text-base">
+              <div class="flex justify-center items-center flex-col gap-1 lg:gap-4 lg:flex-row">
+                <div class="font-bold">"{{ product1.category }}" is live | {{ product1.price_drop_percentage }}% Price Drop + Extra 12%</div>
+                <div class="hidden border border-white h-5 lg:block"></div>
+                <div class="text-sm rounded min-w-[128px] min-h-[20px] text-center h-fit w-fit py-1 px-2 text-xs bg-[#a81111] text-white font-bold lg:text-base">
+                  <span class="mr-1.5">Sale ends in </span>
+                  <span class="font-bold">{{ product1.remaining_time }}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- <style>
+    
+    .hover-shadow:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-item {
+        margin-left: 30mm;
+        margin-right: 30mm;
+        padding: 10px;
+        background-color: #4bb8b8;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style> -->
+
+    <!-- <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                {% for prod in products %}
+                    <div class="col-sm-4 text-center mb-4 hover-shadow">
+                        <a href="{% url 'product-detail' prod.id %}" class="btn product-item"> 
+                            <div>
+                                <img src="{{ prod.product_image.url }}" width="350px" height="350px" alt="">
+                                <div class="fw-bold">{{ prod.title }}</div>
+                                <div class="fw-bold text-danger">
+                                    Rs.{{ prod.discounted_price }}/-
+                                    <small class="fw-light text-decoration-line-through">{{ prod.selling_price }}</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> -->
+    <!-- <style>
+        /* styles.css */
+    
+    /* Products Filter Styles */
+    .products-filter {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    
+    .product-categories {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .product-categories li {
+        margin-bottom: 10px;
+    }
+    
+    .product-categories a {
+        color: #343a40;
+        text-decoration: none;
+        display: block;
+        padding: 5px;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .product-categories a:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+    
+    .product-categories .current a {
+        background-color: #007bff;
+        color: #fff;
+    }
+    
+    /* Product Card Styles */
+    .card {
+        border: none;
+    }
+    
+    .card img {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    .card-footer {
+        padding: 15px;
+    }
+    
+    /* Sale Badge Styles */
+    .badge.bg-dark {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+    
+    /* Product Name Styles */
+    .card h5 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    
+    /* Product Review Styles */
+    .small.text-warning {
+        margin-bottom: 10px;
+    }
+    
+    .small.text-warning .bi-star-fill {
+        color: #ffc107;
+    }
+    
+    /* Product Price Styles */
+    .card span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .text-muted.text-decoration-line-through {
+        color: #868e96;
+    }
+    
+    /* Product Actions Styles */
+    .text-center .btn-outline-dark {
+        color: #343a40;
+        border-color: #343a40;
+        margin: 5px;
+        transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .text-center .btn-outline-dark:hover {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+    
+    
+    </style>
+        <div>
+            <div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="list-group">
+                            {% for category in categories %}
+                                <a href="{% url 'category-title' category.title %}" class="list-group-item list-group-item-action" aria-current="true">
+                                    {{ category.title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <style>
+                        /* styles.css */
+                    
+                    /* Products Filter Styles */
+                    .products-filter {
+                        background-color: #f8f9fa;
+                        padding: 15px;
+                        border-radius: 5px;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .product-categories {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    
+                    .product-categories li {
+                        margin-bottom: 10px;
+                    }
+                    
+                    .product-categories a {
+                        color: #343a40;
+                        text-decoration: none;
+                        display: block;
+                        padding: 5px;
+                        border-radius: 3px;
+                        transition: background-color 0.3s ease;
+                    }
+                    
+                    .product-categories a:hover {
+                        background-color: #007bff;
+                        color: #fff;
+                    }
+                    
+                    .product-categories .current a {
+                        background-color: #007bff;
+                        color: #fff;
+                    }
+                    
+                    /* Product Card Styles */
+                    .card {
+                        border: none;
+                    }
+                    
+                    .card img {
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+                    }
+                    
+                    .card-body {
+                        padding: 15px;
+                    }
+                    
+                    .card-footer {
+                        padding: 15px;
+                    }
+                    
+                    /* Sale Badge Styles */
+                    .badge.bg-dark {
+                        font-size: 14px;
+                        padding: 5px 10px;
+                    }
+                    
+                    /* Product Name Styles */
+                    .card h5 {
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                    }
+                    
+                    /* Product Review Styles */
+                    .small.text-warning {
+                        margin-bottom: 10px;
+                    }
+                    
+                    .small.text-warning .bi-star-fill {
+                        color: #ffc107;
+                    }
+                    
+                    /* Product Price Styles */
+                    .card span {
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                    
+                    .text-muted.text-decoration-line-through {
+                        color: #868e96;
+                    }
+                    
+                    /* Product Actions Styles */
+                    .text-center .btn-outline-dark {
+                        color: #343a40;
+                        border-color: #343a40;
+                        margin: 5px;
+                        transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+                    }
+                    
+                    .text-center .btn-outline-dark:hover {
+                        color: #fff;
+                        background-color: #343a40;
+                        border-color: #343a40;
+                    }
+                    
+                    
+                    </style>
+                        <link rel="stylesheet" href="{% static 'app.css/styles.css' %}">
+                    
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="products-filter">
+                                        <h4 class="section-title">Sort By</h4>
+                                        <ul class="product-categories">
+                                            <li class="current">
+                                                <a href="{% url 'shop' %}" data-cat_id="" class="ml-0">View All</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'AN' %}" data-cat_id="antioxidants">Antioxidants</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'AV' %}" data-cat_id="ayurvedic">Ayurvedic</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'DH' %}" data-cat_id="digestive-health">Digestive Health</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'GH' %}" data-cat_id="general-health">General Health</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'HS' %}" data-cat_id="herbal-specialty-supplements">Herbal, Specialty Supplements</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'IH' %}" data-cat_id="immune-health">Immune Health</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'MH' %}" data-cat_id="men-health">Men Health</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'OG' %}" data-cat_id="organic">Organic</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'PC' %}" data-cat_id="personal-care">Personal Care</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'SH' %}" data-cat_id="sexual-health">Sexual Health</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'VM' %}" data-cat_id="vitamins-minerals">Vitamins & Minerals</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'category' 'WH' %}" data-cat_id="women-health">Women Health</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <style>
+                                    h1 {
+                                        color: #333;
+                                        background: linear-gradient(to right, #a7acd9, #8797d6, #6774d2, #485fd0, #2f48c0);
+                                        padding: 20px;
+                                        border-radius: 8px;
+                                        text-align: center;
+                                        text-transform: uppercase;
+                                        letter-spacing: 2px;
+                                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                      }
+                                </style>
+                                <div class="col-md-10">
+                                    <h1>Related products</h1>
+                    <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 col-sm-6" style="padding: 20px;">
+                    <div class="product-grid">
+                        <div class="product-image">
+                            <a href="{% url 'product-detail' product.id %}" class="image">
+                                <img class="pic-1" src="{{ product.product_image.url }}" alt="{{ product.title }}" style="height: 375px;">
+                            </a>
+                            {% if product.discounted_price %}
+                                <span class="product-discount-label">-{{ product.discount_percentage }}%</span>
+                            {% endif %}
+                            <ul class="product-links">
+                                <li><a href="#" data-tip="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#" data-tip="Compare"><i class="fa fa-random"></i></a></li>
+                                <li><a href="{% url 'product-detail' product.id %}" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product-content">
+                            <ul class="rating">
+                            </ul>
+                            <h3 class="title"><a href="{% url 'product-detail' product.id %}">{{ product.title }}</a></h3>
+                            <div class="price">
+                                {% if product.discounted_price %}
+                                    <span>{{ product.discounted_price }}</span> {{ product.selling_price }}
+                                {% else %}
+                                    {{ product.selling_price }}
+                                {% endif %}
+                            </div>
+                            <div style="background: transparent;">
+                                <div >
+                                    {% for _ in product.stars.full_stars %}
+                                        <i class='bx bxs-star'></i>
+                                        <span class="fa fa-star checked"></span>
+                                    {% endfor %}
+                                    {% if product.stars.has_half_star %}
+                                        <i class='bx bxs-star-half'></i>
+                                        <span class="fa fa-star-half checked"></span>
+                                    {% endif %}
+                                    {% for _ in product.stars.empty_stars %}
+                                        <i class='bx bx-star'></i>
+                                        <span class="fa fa-star"></span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <a class="add-to-cart" href="{% url 'cart' %}">add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+        <style>
+            
+            .product-grid{
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border-radius: 15px;
+            border: 1px solid #e7e7e7;
+            overflow: hidden;
+            transition: all 0.4s ease-out;
+        }
+        .product-grid:hover{ box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.1); }
+        .product-grid .product-image{ position: relative; }
+        .product-grid .product-image a.image{ display: block; }
+        .product-grid .product-image img{
+            width: 100%;
+            height: auto;
+        }
+        .product-grid .product-discount-label{
+            color: #fff;
+            background: #78a206;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 5px;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+        }
+        .product-grid .product-links{
+            width: 145px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50%);
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transition: all 0.4s ease 0s;
+        }
+        .product-grid:hover .product-links{
+            opacity: 1;
+            top: 50%;
+        }
+        .product-grid .product-links li{
+            display: inline-block;
+            margin: 0 2px;
+        }
+        .product-grid .product-links li a{
+            color: #2c2c2c;
+            background: #fff;
+            font-size: 16px;
+            line-height: 42px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50px;
+            display: block;
+            position: relative;
+            transition: all 0.4s ease-out 0s;
+        }
+        .product-grid .product-links li a:hover{
+            color: #fff;
+            background: #78a206;
+            box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.2);
+        }
+        .product-grid .product-links li a:before,
+        .product-grid .product-links li a:after{
+            content: attr(data-tip);
+            color: #fff;
+            background-color: #555;
+            font-size: 12px;
+            line-height: 18px;
+            padding: 5px 10px;
+            white-space: nowrap;
+            display: none;
+            transform: translateX(-50%);
+            position: absolute;
+            left: 50%;
+            top: -40px;
+            transition: all 0.3s ease 0s;
+        }
+        .product-grid .product-links li a:after{
+            content: '';
+            height: 10px;
+            width: 10px;
+            padding: 0;
+            transform: translateX(-50%) rotate(45deg);
+            top: -18px;
+            z-index: -1;
+        }
+        .product-grid .product-links li a:hover:before,
+        .product-grid .product-links li a:hover:after{
+            display: block;
+        }
+        .product-grid .product-content{
+            padding: 12px 12px 15px;
+            position: relative;
+        }
+        .product-grid .rating{
+            padding: 0;
+            margin: 0 0 8px;
+            list-style: none;
+        }
+        .product-grid .rating li{
+            color: #78a206;
+            font-size: 14px;
+        }
+        .product-grid .rating .far{ color: #808080; }
+        .product-grid .title{
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 0 0 15px;
+        }
+        .product-grid .title a{
+            color: #2c2c2c;
+            transition: all 0.3s ease 0s;
+        }
+        .product-grid .title a:hover{ color: #78a206; }
+        .product-grid .price{
+            color: #78a206;
+            font-size: 17px;
+            font-weight: 600;
+            display: block;
+            transition: all 0.4s ease-in-out;
+        }
+        .product-grid .price span{
+            color: #999;
+            font-weight: 500;
+            text-decoration: line-through;
+        }
+        .product-grid:hover .price{ opacity: 0; }
+        .product-grid .add-to-cart{
+            color: #fff;
+            background-color: #78a206;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 40px;
+            width: 140px;
+            height: 40px;
+            border-radius: 50px;
+            opacity: 0;
+            transform: translateX(-50%);
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transition: all .4s ease-out;
+        }
+        .product-grid .add-to-cart:hover{ background-color: #2f2f2f; }
+        .product-grid:hover .add-to-cart{
+            opacity: 1;
+            bottom: 8px;
+        }
+        @media screen and (max-width:1200px){
+            .product-grid{ margin: 0 0 30px; }
+        }
+        .product-grid {
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+                border-radius: 15px;
+                border: 1px solid #e7e7e7;
+                overflow: hidden;
+                transition: all 0.4s ease-out;
+                margin-bottom: 20px; /* Add margin to create spacing between product cards */
+                height: 100%; /* Ensure all product cards have the same height */
+            }
+        
+            .product-grid:hover {
+                box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+        
+        
+
+
+
+
+
+ -->
+
+
+
+
+        <div class="md:w-[940px] lg:w-[1180px] max-w-full mx-auto p-4 container-fluid" style="width: 1400px; font-size: 20px;">
+            <div role="presentation" class="">
+                <div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center flex-wrap py-3" id="targetElement">
+                            <h1 class="font-bold text-[26px] m-0">Best supplements</h1>
+                            <span class="font-bold text-[26px]">(products found)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>Sort By</div>
+                            <div class="px-4 py-3 ml-2 border border-gray rounded-md">
+                                <form method="get" action="{% url 'search' %}">
+                                    <select name="price_filter" class="outline-none bg-white" onchange="this.form.submit()">
+                                        <option value="_text_match:desc,weight:desc" {% if price_filter == '_text_match:desc,weight:desc' %}selected{% endif %}>Relevance</option>
+                                        <option value="selling_price:asc" {% if price_filter == 'selling_price:asc' %}selected{% endif %}>Price: Low to High</option>
+                                        <option value="selling_price:desc" {% if price_filter == 'selling_price:desc' %}selected{% endif %}>Price: High to Low</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="grid grid-cols-4 gap-7 pt-5">
+                        <div class="col-span-1">
+                            <div>
+                                <div class="hidden">
+                                    <div class="text-base font-bold text-gray pr-4">0
+                                    <!-- -->
+                                    <!-- -->
+                                    Filters
+                                    <!-- -->
+                                    Applied</div>
+                                    <button class=" text-primary-dark underline text-sm">Clear Filters</button>
+                                </div>
+                                <div class="pb-4 border-b border-b-gray-thin mb-4">
+                                    <div class="text-sm font-bold capitalize">formulation</div>
+                                    <div class="pt-1.5">
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AN' %}" data-cat_id="antioxidants">Antioxidants</a>
+                                                    {% with category_count=category_counts.AN|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AV' %}" data-cat_id="ayurvedic">Ayurvedic</a>
+                                                    {% with category_count=category_counts.AV|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'DH' %}" data-cat_id="digestive-health">Digestive Health</a>
+                                                    {% with category_count=category_counts.DH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'GH' %}" data-cat_id="general-health">General Health</a>
+                                                    {% with category_count=category_counts.GH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'HS' %}" data-cat_id="herbal-specialty-supplements">Herbal, Specialty Supplements</a>
+                                                    {% with category_count=category_counts.HS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'IH' %}" data-cat_id="immune-health">Immune Health</a>
+                                                    {% with category_count=category_counts.IH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'MH' %}" data-cat_id="men-health">Men Health</a>
+                                                    {% with category_count=category_counts.MH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'OG' %}" data-cat_id="organic">Organic</a>
+                                                    {% with category_count=category_counts.OG|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'PC' %}" data-cat_id="personal-care">Personal Care</a>
+                                                    {% with category_count=category_counts.PC|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'SH' %}" data-cat_id="sexual-health">Sexual Health</a>
+                                                    {% with category_count=category_counts.SH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'VM' %}" data-cat_id="vitamins-minerals">Vitamins & Minerals</a>
+                                                    {% with category_count=category_counts.VM|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'WH' %}" data-cat_id="women-health">Women Health</a>
+                                                    {% with category_count=category_counts.WH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                                                    </div>
+                                    <button class="hidden">See more options..</button>
+                                </div>
+                                <div class="pb-4 border-b border-b-gray-thin mb-4">
+                                    <div class="text-sm font-bold capitalize">diet values</div>
+                                    <div class="pt-1.5">
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'B12' %}" data-cat_id="men-health">Vitamin B12</a>
+                                                    {% with category_count=category_counts.B12|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'C' %}" data-cat_id="organic">Vitamin C</a>
+                                                    {% with category_count=category_counts.C|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'D3' %}" data-cat_id="personal-care">Vitamin D3</a>
+                                                    {% with category_count=category_counts.D3|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'E' %}" data-cat_id="sexual-health">Vitamin E</a>
+                                                    {% with category_count=category_counts.E|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'A' %}" data-cat_id="vitamins-minerals">Vitamin A</a>
+                                                    {% with category_count=category_counts.A|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'C' %}" data-cat_id="women-health">Vitamin C</a>
+                                                    {% with category_count=category_counts.C|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'K' %}" data-cat_id="men-health">Vitamin K</a>
+                                                    {% with category_count=category_counts.K|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                    </div>
+                                </div>
+                                <div class="pb-4 border-b border-b-gray-thin mb-4">
+                                    <div class="text-sm font-bold capitalize">Health Problems &Concerns</div>
+                                    <div class="pt-1.5">
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AC' %}" data-cat_id="Acne">Acne</a>
+                                                    {% with category_count=category_counts.AC|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'DS' %}" data-cat_id="Dry Skin">Dry Skin</a>
+                                                    {% with category_count=category_counts.DS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AD' %}" data-cat_id="Acidity">Acidity</a>
+                                                    {% with category_count=category_counts.AD|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'CP' %}" data-cat_id="Constipation">Constipation</a>
+                                                    {% with category_count=category_counts.CP|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'PD' %}" data-cat_id="PCOD">PCOD</a>
+                                                    {% with category_count=category_counts.PD|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'DD' %}" data-cat_id="Dandruff">Dandruff</a>
+                                                    {% with category_count=category_counts.DD|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'BS' %}" data-cat_id="Blood Sugar">Blood Sugar</a>
+                                                    {% with category_count=category_counts.BS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'PS' %}" data-cat_id="Poor sleep">Poor sleep</a>
+                                                    {% with category_count=category_counts.PS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        
+                                        
+                                        
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                    </div>
+                                    <button class="text-primary-dark text-sm underline">See more options..</button>
+                                </div>
+                                <div class="pb-4 border-b border-b-gray-thin mb-4">
+                                    <div class="text-sm font-bold capitalize">Health suppliments</div>
+                                    <div class="pt-1.5">
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'VM' %}" data-cat_id="Vitamins-Minerals">Vitamins & Minerals</a>
+                                                    {% with category_count=category_counts.VM|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'HS' %}" data-cat_id="Herbal-Specialty-Supplements">Herbal, Specialty Supplements</a>
+                                                    {% with category_count=category_counts.HS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AN' %}" data-cat_id="antioxidants">Antioxidants</a>
+                                                    {% with category_count=category_counts.AN|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'IH' %}" data-cat_id="Constipation">Immune Health</a>
+                                                    {% with category_count=category_counts.IH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'DIH' %}" data-cat_id="PCOD">Diabetic Health</a>
+                                                    {% with category_count=category_counts.DIH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'CH' %}" data-cat_id="Dandruff">Cardiovascular Health</a>
+                                                    {% with category_count=category_counts.CH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'BH' %}" data-cat_id="Blood Sugar">Brain Health</a>
+                                                    {% with category_count=category_counts.BH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'MH' %}" data-cat_id="Poor sleep">Men Health</a>
+                                                    {% with category_count=category_counts.MH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'WH' %}" data-cat_id="Poor sleep">Women Health</a>
+                                                    {% with category_count=category_counts.WH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'AS' %}" data-cat_id="Poor sleep">Anti stress</a>
+                                                    {% with category_count=category_counts.AS|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'SH' %}" data-cat_id="Poor sleep">Sexual Health</a>
+                                                    {% with category_count=category_counts.SH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'DH' %}" data-cat_id="Poor sleep">Digestive Health</a>
+                                                    {% with category_count=category_counts.DH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'BJH' %}" data-cat_id="Poor sleep">Bone & Joint Health</a>
+                                                    {% with category_count=category_counts.BJH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'KH' %}" data-cat_id="Poor sleep">Kidney Health</a>
+                                                    {% with category_count=category_counts.KH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'PH' %}" data-cat_id="Poor sleep">Prostate Health</a>
+                                                    {% with category_count=category_counts.PH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                                <!-- Number of products in the category -->
+                                                {% if category_counts %}
+                                                <span class="text-sm ml-2 leading-6 capitalize">
+                                                    <a href="{% url 'category' 'GH' %}" data-cat_id="Poor sleep">General Health</a>
+                                                    {% with category_count=category_counts.GH|default:0 %}
+                                                        ({{ category_count }})
+                                                      {% endwith %}
+                                                     </span>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+        
+                                        
+                                        
+                                        
+                                        <button class="flex items-center text-left mb-[6px] lg:mb-1">
+                                    </div>
+                                    <button class="text-primary-dark text-sm underline">See more options..</button>
+                                </div>
+                                <div class="pb-4 border-b border-b-gray-thin mb-4">
+                                    <div class="text-sm font-bold capitalize">Price Range</div>
+                                    <div class="pt-1.5">
+                                        <form method="get" action="{% url 'search' %}">
+                                            <button type="submit" name="price_range" value="0-500" class="flex items-center text-left mb-[6px] lg:mb-1">
+                                                <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm border-2 border-gray">
+                                                    <div class="text-white">
+                                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                
+                                            <span class="text-sm ml-2 leading-6 capitalize">&lt;500
+                                            <!-- -->
+                                            (
+                                            <!-- -->
+                                            230
+                                            <!-- -->
+                                            )</span>
+                                        </button>
+                                        <button type="submit" name="price_range" value="0-2000" class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm
+        border-2 border-gray
+        ">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm ml-2 leading-6 capitalize">&gt;2000
+                                            <!-- -->
+                                            (
+                                            <!-- -->
+                                            22
+                                            <!-- -->
+                                            )</span>
+                                        </button>
+                                        <button type="submit" name="price_range" value="1000-2000" class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm
+        border-2 border-gray
+        ">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm ml-2 leading-6 capitalize">1000-2000
+                                            <!-- -->
+                                            (
+                                            <!-- -->
+                                            79
+                                            <!-- -->
+                                            )</span>
+                                        </button>
+                                        <button type="submit" name="price_range" value="500-1000" class="flex items-center text-left mb-[6px] lg:mb-1">
+                                            <div class="h-[14px] w-[14px] flex justify-center items-center rounded-sm
+        border-2 border-gray
+        ">
+                                                <div class="text-white">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="h-[14px] w-[14px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M16.972 6.251c-.967-.538-2.185-.188-2.72.777l-3.713 6.682-2.125-2.125c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l4 4c.378.379.888.587 1.414.587l.277-.02c.621-.087 1.166-.46 1.471-1.009l5-9c.537-.966.189-2.183-.776-2.72z"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm ml-2 leading-6 capitalize">500-1000
+                                            <!-- -->
+                                            (
+                                            <!-- -->
+                                            214
+                                            <!-- -->
+                                            )</span>
+                                        </button>
+                                    </div>
+                                    <button class="hidden">See more options..</button>
+                                </div>
+                                                    </div>
+                        </div>
+                        <div class="col-span-3 container-fluid" style="height: 100%;">
+                            <div class="grid grid-cols-2 p-0 m-0 overflow-hidden lg:rounded md:grid-cols-3 lg:grid-cols-3 mb-4" style="background:linear-gradient(90deg, rgba(26,134,148,1) 0%, rgba(48,161,176,1) 55%, rgba(36,186,173,1) 100%)">
+                                <div class="h-full font-blod text-white font-semibold py-4 px-2 my-auto flex items-center ">
+                                    <img src="https://www.getsupp.com/static/misc/icons/shield-min.svg" alt="Free Guidance" class="max-h-[24px] object-contain lg:max-h-[32px]"/>
+                                    <div class="text-sm ml-2 leading-4 lg:text-base">
+                                        <div>Free Guidance</div>
+                                        <div class="font-normal text-xs lg:text-sm">For Best Results</div>
+                                    </div>
+                                </div>
+                                <div class="h-full font-blod text-white font-semibold py-4 px-2 my-auto flex items-center border-l-[white] border-l-2 border-solid">
+                                    <img src="https://www.getsupp.com/static/misc/icons/discount-white-min.svg" alt="Flat 12% Off" class="max-h-[24px] object-contain lg:max-h-[32px]"/>
+                                    <div class="text-sm ml-2 leading-4 lg:text-base">
+                                        <div>Flat 12% Off</div>
+                                        <div class="font-normal text-xs lg:text-sm">On all products</div>
+                                    </div>
+                                </div>
+                                <div class="h-full font-blod text-white font-semibold py-4 px-2 my-auto flex items-center border-l-[white] border-l-2 border-solid">
+                                    <img src="https://www.getsupp.com/static/misc/icons/package-white-min.svg" alt="100% Safe" class="max-h-[24px] object-contain lg:max-h-[32px]"/>
+                                    <div class="text-sm ml-2 leading-4 lg:text-base">
+                                        <div>100% Safe</div>
+                                        <div class="font-normal text-xs lg:text-sm">Verified by Dietitians</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-x-6 gap-y-6 place-items-stretch">
+                                {% for product in products %}
+                                <div role="presentation" class="lg:h-full">
+                                    <div role="presentation" class="lg:h-full">
+                                        <div class="h-full border-b border-r border-gray-light relative lg:min-h-[332px] lg:min-w-[220px] lg:border lg:border-gray-thin lg:rounded">
+                                            <div class="relative img-gray-bg lg:h-[256px] lg:min-w-[256px] mx-auto lg:overflow-hidden animate-product-img">
+                                                <a href="{% url 'product-detail' product.id %}">
+                                                    <img alt="{{ product.name }}" loading="lazy" width="276" height="256" decoding="async" data-nimg="1"
+                                                        class="mx-auto object-contain aspect-square cursor-pointer" style="color:transparent"
+                                                        src="{{ product.product_image.url }}">
+                                                </a>
+                                                <div class="bottom-2 left-2 absolute py-0.5 px-1 text-black font-semibold rounded-sm bg-white bg-opacity-60 border border-gray-extralight flex items-center">
+                                                    <span class="text-sm mr-0.5">{{ product.average_rating|default:"N/A"|floatformat:1 }} </span>
+        
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-[#FFA41C] text-sm" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <g>
+                                                            <path fill="none" d="M0 0h24v24H0z"></path>
+                                                            <path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"></path>
+                                                        </g>
+                                                    </svg>
+                                                    <div class="w-[1px] bg-black h-[14px] mx-1"></div>
+                                                    <span class="text-sm">{{ product.reviews.count }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="p-2 pb-4 lg:p-3 lg:pb-11">
+                                                <p class="text-sm line-clamp-3 cursor-pointer lg:min-h-[66px] lg:text-base lg:leading-[22px] hover:text-primary-dark">
+                                                    {{ product.title }}</p>
+                                                <p class="bg-gray-thin text-xs font-semibold text-black px-2 py-0.5 w-fit rounded mt-1 line-clamp-2">
+                                                    {{ product.packaging_details }}</p>
+                                                <div class="flex items-baseline my-1 text-black text-lg">
+                                                    <sup class="text-sm font-bold">₹</sup>
+                                                    <span class="text-2xl font-bold">{{ product.discounted_price }}</span>
+                                                    <span class="text-sm font-bold">.00</span>
+                                                    <span class="opacity-40 text-sm mx-1.5 line-through font-semibold">₹{{ product.selling_price }}</span>
+                                                    <span class="text-primary text-sm font-semibold">({{ product.discount_percentage }}% off)</span>
+                                                </div><br>
+                                                <div class="flex w-full justify-end items-center mt-2 lg:absolute lg:bottom-3 lg:right-0 lg:px-3">
+                                                    <div role="presentation" class="">
+                                                        <button class="rounded-sm py-3 flex justify-center items-center font-bold lg:py-4 bg-red text-white shadow-red-200 shadow-smdrop w-28 h-8 text-sm shadow-none ">Buy Now</button>
+                                                    </div>
+                                                </div>
+                                                <div class="absolute z-20 flex justify-center items-center bg-white top-3 right-3 h-4 w-4 border-2 lg:h-5 lg:w-5 border-green">
+                                                    <div class="rounded-full h-2 w-2 lg:h-3 lg:w-3 bg-green"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                    <div class="py-4 lg:p-0 col-span-3">
+                                        <h3 class="px-5 py-0 m-0 mb-2 text-sm text-black lg:text-base lg:px-0">Are you looking for :</h3>
+                                        <div class="px-4 w-full flex items-stretch gap-5 overflow-x-scroll overflow-y-visible custom_scroll_bar hide_scroll_bar snap-x snap-mandatory scroll-pl-4 md:grid md:grid-cols-3 md:p-0 md:py-2 md:border-none">
+                                            <div role="presentation" class="snap-start">
+                                                <a class="p-4 border bg-white border-primary min-w-[256px] rounded-2xl shadow-smdrp flex flex-col gap-2 md:w-full md:shadow-md md:min-w-0 h-full" href="/vitamin-c-for-product/kl">
+                                                    <span class="inline-block text-sm line-clamp-3 font-bold text-primary-dark md:line-clamp-2">Vitamin C For product</span>
+                                                    <span class="inline-block">
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Promotes collagen production for skin healing</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Anti-inflammatory properties reduce product redness</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Prevents oxidative damage to skin cells</span>
+                                                        </div>
+                                                    </span>
+                                                    <div class="text-[13px] text-primary-dark underline flex items-center justify-end gap-2 mt-auto">
+                                                        View 22 products
+                                                        <svg height="1em" width="1em" stroke="currentColor" viewBox="0 0 8 14" class="text-primary-dark" aria-label="" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        </svg>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div role="presentation" class="snap-start">
+                                                <a class="p-4 border bg-white border-primary min-w-[256px] rounded-2xl shadow-smdrp flex flex-col gap-2 md:w-full md:shadow-md md:min-w-0 h-full" href="/collagen-for-product/kl">
+                                                    <span class="inline-block text-sm line-clamp-3 font-bold text-primary-dark md:line-clamp-2">Collagen For product</span>
+                                                    <span class="inline-block">
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Promotes skin elasticity and hydration</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Reduces inflammation and redness</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Supports tissue repair and healing</span>
+                                                        </div>
+                                                    </span>
+                                                    <div class="text-[13px] text-primary-dark underline flex items-center justify-end gap-2 mt-auto">
+                                                        View 20 products
+                                                        <svg height="1em" width="1em" stroke="currentColor" viewBox="0 0 8 14" class="text-primary-dark" aria-label="" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        </svg>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div role="presentation" class="snap-start">
+                                                <a class="p-4 border bg-white border-primary min-w-[256px] rounded-2xl shadow-smdrp flex flex-col gap-2 md:w-full md:shadow-md md:min-w-0 h-full" href="/apple-cider-vinegar-for-product/kl">
+                                                    <span class="inline-block text-sm line-clamp-3 font-bold text-primary-dark md:line-clamp-2">Apple Cider Vinegar For product</span>
+                                                    <span class="inline-block">
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Balances skin &#x27;s pH levels.</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Antibacterial and antifungal properties.</span>
+                                                        </div>
+                                                        <div class="flex items-start gap-1">
+                                                            <img alt="list-icon" loading="lazy" width="12" height="12" decoding="async" data-nimg="1" class="object-contain mt-1" style="color:transparent" src="https://www.getsupp.com/static/misc/icons/benefit-item-check-primary-min.svg"/>
+                                                            <span class="ml-1 text-[13px] text-black opacity-80">Reduces inflammation and redness.</span>
+                                                        </div>
+                                                    </span>
+                                                    <div class="text-[13px] text-primary-dark underline flex items-center justify-end gap-2 mt-auto">
+                                                        View 14 products
+                                                        <svg height="1em" width="1em" stroke="currentColor" viewBox="0 0 8 14" class="text-primary-dark" aria-label="" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        </svg>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="flex justify-center pt-5">
+                {% if products.has_previous %}
+                <a href="?page=1" class="m-6 flex items-center">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                        class="text-white text-4xl bg-primary rounded-full hover:bg-primary-dark" height="1em" width="1em"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill="none" d="M0 0h24v24H0V0z"></path>
+                        <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z"></path>
+                    </svg>
+                </a>
+                {% endif %}
+        
+                {% for num in products.paginator.page_range %}
+                <a href="?page={{ num }}" class="m-6 flex items-center {% if products.number == num %}font-bold{% endif %}"> {{ num }}</a>
+            </a>
+                {% endfor %}
+        
+                {% if products.has_next %}
+                <a href="?page={{ products.paginator.num_pages }}" class="m-6 flex items-center">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                        class="text-white text-4xl bg-primary rounded-full hover:bg-primary-dark" height="1em" width="1em"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill="none" d="M0 0h24v24H0V0z"></path>
+                        <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z"></path>
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+        
+        
+        
+        {% endblock main-content %}
+        
+        {% block content %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+        
+            .product-section {
+                background-color: #ede7d2;
+                padding: 40px;
+                text-align: center;
+            }
+        
+            .safetyShield {
+                display: inline-block;
+                margin: 20px;
+                max-width: 300px; /* Adjust as needed */
+            }
+        
+            .safetyShield img {
+                width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+            }
+        
+            .safetyShield h3 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+            }
+        
+            .safetyShield p {
+                font-size: 14px;
+                color: #555;
+            }
+        </style>
+        
+        <section class="product-section">
+            <h2 class="text-bold" style="font-size: 40px; font-weight: bold;">Why choose Nuturemite?</h2>
+            <p style="font-size: 25px;">100% Safe & Authentic Products Curated By Certified Dietitians.</p>
+            <br><br><br>
+            <div class="safetyShield">
+                <img src="https://www.getsupp.com/static/media/misc/icons/trust-banner-safety-shield-icon.svg" alt="Icon 2" style="width: 200px; height: 100px;">
+                <h3 class="text-bold" style="font-size: 18px; font-weight: bold;">Nurturemite Safety Shield</h3>
+                <p style="font-size: 16px;">Thorough checks to ensure that you receive an authentic & genuine product.</p>
+            </div>
+        
+            <div class="safetyShield">
+                <img src="https://www.getsupp.com/static/media/misc/icons/trust-banner-free-support-icon.svg" alt="Icon 2" style="width: 200px; height: 100px;">
+                <h3 class="text-bold" style="font-size: 18px; font-weight: bold;">Free support from Experts</h3>
+                <p style="font-size: 16px;">Our experts are here to help you see results with the products you purchase</p>
+            </div>
+        
+            <div class="safetyShield">
+                <img src="https://www.getsupp.com/static/media/misc/icons/trust-banner-brands-globe-icon.svg" alt="Icon 3" style="width: 200px; height: 100px;">
+                <h3 class="text-bold" style="font-size: 18px; font-weight: bold;">200+ brands from across the globe</h3>
+                <p style="font-size: 16px;">Your health is our priority. We have curated the best products</p>
+            </div>
+        
+            <div class="safetyShield">
+                <img src="https://www.getsupp.com/static/media/misc/icons/trust-banner-free-shipping-icon.svg" alt="Icon 4" style="width: 200px; height: 100px;">
+                <h3 class="text-bold" style="font-size: 18px; font-weight: bold;">Free Express Delivery*</h3>
+                <p style="font-size: 16px;">Get free delivery / shipping on orders above ₹499/-</p>
+            </div>
+        </section>
+</div>
+</div>
+{% endblock content %}
